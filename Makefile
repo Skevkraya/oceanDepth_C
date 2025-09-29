@@ -8,7 +8,7 @@ oceanDepth.exe: $(OBJ)
 
 
 build/%.o: sources/%.c
-	@mkdir -p build
+	@if not exist build mkdir build
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

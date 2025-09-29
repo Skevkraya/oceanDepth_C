@@ -15,18 +15,9 @@ typedef struct {
 } CreatureMarine;
 
 // Constructeur
-CreatureMarine* creer_creature(
-    int id,
-    const char* nom,
-    int pv_max,
-    int attaque_min,
-    int attaque_max,
-    int defense,
-    int vitesse,
-    const char* effet_special
-);
-
+CreatureMarine* creer_creature(const CreatureMarine* modele);
 void detruire_creature(CreatureMarine* creature);
+void afficher_creatures(CreatureMarine* creatures[], int nb_creatures);
 
 extern const CreatureMarine KRAKEN;
 extern const CreatureMarine REQUIN;
@@ -35,5 +26,3 @@ extern const CreatureMarine POISSON_EPEE;
 extern const CreatureMarine CRABE_GEANT;
 
 #endif
-
-//██████▒▒▒▒▒▒

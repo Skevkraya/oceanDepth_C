@@ -1,13 +1,3 @@
-// OceanDepths - Profondeur: -247m Perles: 42
-// Vie [█████████████████████████████████████████████
-// ███████▒▒▒▒] 87/100
-// Oxygène [██████████████████████████████████▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒] 58/100
-// Fatigue [███▒▒▒▒▒] 3/5
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "joueur.h"
@@ -19,6 +9,9 @@ Plongeur* creer_joueur(
     int niveau_oxygene,
     int niveau_oxygene_max,
     int niveau_fatigue,
+    int attaque_min,
+    int attaque_max,
+    int defense,
     int perles
 ) {
     Plongeur* p = malloc(sizeof(Plongeur));
@@ -32,6 +25,9 @@ Plongeur* creer_joueur(
     p->niveau_oxygene = niveau_oxygene;
     p->niveau_oxygene_max = niveau_oxygene_max;
     p->niveau_fatigue = niveau_fatigue;
+    p->attaque_min = attaque_min;
+    p->attaque_max = attaque_max;
+    p->defense     = defense;
     p->perles = perles;
 
     return p;

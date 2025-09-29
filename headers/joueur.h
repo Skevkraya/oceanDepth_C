@@ -7,6 +7,9 @@ typedef struct {
     int niveau_oxygene;
     int niveau_oxygene_max;
     int niveau_fatigue; // 0 à 5
+    int attaque_min;
+    int attaque_max;
+    int defense;
     int perles; // monnaie du jeu
 } Plongeur;
 
@@ -17,6 +20,9 @@ Plongeur* creer_joueur(
     int niveau_oxygene,
     int niveau_oxygene_max,
     int niveau_fatigue,
+    int attaque_min,
+    int attaque_max,
+    int defense,
     int perles
 );
 
