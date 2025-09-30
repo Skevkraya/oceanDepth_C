@@ -18,6 +18,13 @@ void attaquer_creature(Plongeur* joueur, CreatureMarine* creature) {
     int degats = degats_base - creature->defense;
     if (degats < 1) degats = 1;
     creature->points_de_vie_actuels -= degats;
+
+    int oxygene_perdu = 3;
+    int fatigue_gagnee = 1;
+
+    perdre_oxygene(joueur, oxygene_perdu);
+    gagner_fatigue(joueur, fatigue_gagnee);
+
     printf("╔════════════════════ COMBAT SOUS-MARIN ════════════════════╗\n");
     printf("║ Vous attaquez le %s avec votre Harpon Rouillé   ║\n", creature -> nom);
     printf("║                                                           ║\n");
@@ -28,8 +35,8 @@ void attaquer_creature(Plongeur* joueur, CreatureMarine* creature) {
     printf("║ Dégâts infligés: %d points                                ║\n", degats);
     // printf("║ Le %s riposte! Vous perdez 18 points de vie     ║\n", creature -> nom);
     printf("╚═══════════════════════════════════════════════════════════╝\n");
-    printf("Oxygène consommé: -3 (action de combat)\n");
-    printf("Fatigue augmentée: +1 (effort physique)\n");
+    printf("Oxygène consommé: -%d (action de combat)\n", oxygene_perdu);
+    printf("Fatigue augmentée: +%d (effort physique)\n", fatigue_gagnee);
     
     if (creature->points_de_vie_actuels <= 0) {
         creature->points_de_vie_actuels = 0;

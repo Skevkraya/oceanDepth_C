@@ -53,3 +53,19 @@ void afficher_plongeur(Plongeur* plongeur) {
     puts("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 }
+
+void perdre_oxygene(Plongeur* plongeur, int quantite){
+    if (!plongeur) return;
+    plongeur->niveau_oxygene -= quantite;
+    if (plongeur->niveau_oxygene < 0) {
+        plongeur->niveau_oxygene = 0;
+    }
+};
+
+void gagner_fatigue(Plongeur* plongeur, int quantite)  {
+    if (!plongeur) return;
+    plongeur->niveau_fatigue += quantite;
+    if (plongeur->niveau_fatigue > 5) {
+        plongeur->niveau_fatigue = 5;
+    }
+};

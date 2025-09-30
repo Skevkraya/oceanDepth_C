@@ -41,7 +41,13 @@ int main(int argc, char const *argv[]) {
 
         switch (action) {
             case 1:
-            CreatureMarine* cible = creatures[0];
+                if (nb_attaques <= 0) {
+                    printf("Vous êtes trop fatigué pour attaquer!\n");
+                    break;
+                }
+                nb_attaques--;
+                printf("Attaque effectuée! Attaques restantes: %d\n", nb_attaques);
+                CreatureMarine* cible = creatures[0];
                 if (nb_creatures > 0) {
                     attaquer_creature(joueur, cible);
                     if (!cible->est_vivant) {
@@ -70,6 +76,19 @@ int main(int argc, char const *argv[]) {
 
         afficher_plongeur(joueur);
         afficher_creatures(creatures, nb_creatures);
+
+        if (joueur->niveau_oxygene <= 10) {
+            printf("ALERTE CRITIQUE\n");
+        }
+        if (joueur->niveau_oxygene <= 0) {
+            printf("Manque d'oxygène ! Vous perdez 5 PV ...\n");
+            joueur->points_de_vie -= 5;
+        }
+        
+        if(joueur->points_de_vie <= 0) {
+            printf("Vous avez perdu !\n");
+            running = 0;
+        }
     }
 
     return 0;

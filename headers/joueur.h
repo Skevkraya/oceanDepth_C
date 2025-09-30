@@ -26,6 +26,9 @@ Plongeur* creer_joueur(
     int perles
 );
 
+void perdre_oxygene(Plongeur* plongeur, int quantite);
+void gagner_fatigue(Plongeur* plongeur, int quantite);
+
 void detruire_plongeur(Plongeur* plongeur);
 void afficher_plongeur(Plongeur* plongeur);
 #endif
