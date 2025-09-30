@@ -5,7 +5,7 @@
 #include "creatures.h"
 
 void afficher_actions_disponibles();
-void attaquer_creature(Plongeur* joueur, CreatureMarine* creature);
+int attaquer_creature(Plongeur* joueur, CreatureMarine* creature);
 void attaquer_plongeur(CreatureMarine* creature, Plongeur* joueur);
 
 #endif

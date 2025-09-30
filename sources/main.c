@@ -35,6 +35,7 @@ int main(int argc, char const *argv[]) {
     while (running) {
         afficher_actions_disponibles();
         printf("Choisissez une action: ");
+        int nb_attaques = joueur->niveau_fatigue<2?3:(joueur->niveau_fatigue>=2&&joueur->niveau_fatigue<=3?2:1);
         int action;
         scanf("%d", &action);
 
@@ -42,9 +43,9 @@ int main(int argc, char const *argv[]) {
             case 1:
             CreatureMarine* cible = creatures[0];
                 if (nb_creatures > 0) {
-                    attaquer_creature(joueur, creatures[0]);
-                    if (!creatures[0]->est_vivant) {
-                        detruire_creature(creatures[0]);
+                    attaquer_creature(joueur, cible);
+                    if (!cible->est_vivant) {
+                        detruire_creature(cible);
                         for (int i = 1; i < nb_creatures; i++) {
                             creatures[i - 1] = creatures[i];
                         }
