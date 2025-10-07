@@ -19,6 +19,7 @@ CreatureMarine* creer_creature(const CreatureMarine* modele);
 void detruire_creature(CreatureMarine* creature);
 void afficher_creatures(CreatureMarine* creatures[], int nb_creatures);
 void attaquer_plongeur(CreatureMarine* creature, Plongeur* joueur);
+void utiliser_capacite_speciale(CreatureMarine* creature, Plongeur* joueur);
 
 extern const CreatureMarine KRAKEN;
 extern const CreatureMarine REQUIN;

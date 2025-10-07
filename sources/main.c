@@ -33,6 +33,7 @@ int main(int argc, char const *argv[]) {
 
     int running = 1;
     while (running) {
+        // actions joueur
         afficher_actions_disponibles();
         printf("Choisissez une action: ");
         int nb_attaques = joueur->niveau_fatigue<2?3:(joueur->niveau_fatigue>=2&&joueur->niveau_fatigue<=3?2:1);
@@ -88,6 +89,13 @@ int main(int argc, char const *argv[]) {
         if(joueur->points_de_vie <= 0) {
             printf("Vous avez perdu !\n");
             running = 0;
+        }
+
+        for(int i=0; i<nb_creatures; i++) {
+            printf("Au tour du %s", creatures[i]->nom);
+            utiliser_capacite_speciale(CreatureMarine* creatures[i], Plongeur* joueur);
+            attaquer_plongeur(CreatureMarine* creatures[i], Plongeur* joueur);
+
         }
     }
 

@@ -4,11 +4,13 @@
 #include "creatures.h"
 #include "joueur.h"
 
-const CreatureMarine KRAKEN = {1, "🐙 Kraken", 180, 180, 25, 40, 10, 5, "aucun", 1};
-const CreatureMarine REQUIN = {2, "🦈 Requin", 100, 100, 15, 25, 5, 15, "aucun", 1};
-const CreatureMarine MEDUSE = {3, "🪼 Méduse", 40, 40, 8, 15, 2, 6, "paralysie", 1};
-const CreatureMarine POISSON_EPEE = {4, "🐠 Poisson-Épée", 90, 90, 18, 28, 7, 10, "aucun", 1};
-const CreatureMarine CRABE_GEANT = {5, "🦀 Crabe Géant", 120, 120, 12, 20, 20, 4, "aucun", 1};
+#define MAX_CREATURES 4
+
+const CreatureMarine KRAKEN = {1, "🐙 Kraken", 180, 180, 25, 40, 10, 5, "Etreinte tentaculaire", 1};
+const CreatureMarine REQUIN = {2, "🦈 Requin", 100, 100, 15, 25, 5, 15, "Piqûre paralysante", 1};
+const CreatureMarine MEDUSE = {3, "🪼 Méduse", 40, 40, 8, 15, 2, 6, "Frénésie sanguinaire", 1};
+const CreatureMarine POISSON_EPEE = {4, "🐠 Poisson-Épée", 90, 90, 18, 28, 7, 10, "Charge perforante", 1};
+const CreatureMarine CRABE_GEANT = {5, "🦀 Crabe Géant", 120, 120, 12, 20, 20, 4, "Carapace durcie", 1};
 
 CreatureMarine* creer_creature(const CreatureMarine* modele) {
     CreatureMarine* c = malloc(sizeof(CreatureMarine));
@@ -27,14 +29,6 @@ CreatureMarine* creer_creature(const CreatureMarine* modele) {
 void detruire_creature(CreatureMarine* creature) {
     free(creature);
 }
-
-#include <stdio.h>
-#include "creatures.h"
-
-#define MAX_CREATURES 4
-
-#include <stdio.h>
-#include "creatures.h"
 
 void afficher_creatures(CreatureMarine* creatures[], int nb_creatures) {
     if (nb_creatures == 0) {
@@ -68,6 +62,27 @@ void attaquer_plongeur(CreatureMarine* creature, Plongeur* joueur) {
     joueur->niveau_oxygene -= (rand() % 2)+1;
 }
 
-void utiliser_capacite_speciale(CreatureMarine* creature, Plongeur joueur) {
+void utiliser_capacite_speciale(CreatureMarine* creature, Plongeur* joueur) {
+    if (strcmp(creature->effet_special, "Etreinte tentaculaire") == 0) {
+        printf("%s ! Le %s attaque deux fois !\n", creature->effet_special, creature->nom);
+        attaquer_plongeur(CreatureMarine* creature, Plongeur* joueur);
 
+    } else if (strcmp(creature->effet_special, "Piqûre paralysante") == 0) {
+        printf("%s ! Le joueur sera paralysé au prochain tour!\n", creature->effet_special);
+        joueur->isParalyzed=1;
+
+    } else if (strcmp(creature->effet_special, "Frénésie sanguinaire") == 0) {
+        printf("%s ! Le %s entre en frénésie !\n", creature->effet_special, creature->nom);
+
+
+    } else if (strcmp(creature->effet_special, "Charge perforante") == 0) {
+        printf("%s ! Le %s ignore la défense du plongeur !\n", creature->effet_special, creature->nom);
+
+    } else if (strcmp(creature->effet_special, "Carapace durcie") == 0) {
+        printf("%s ! Le %s durcit sa carapace !\n", creature->effet_special, creature->nom);
+
+
+    } else {
+        printf("Capacité spéciale '%s' inconnue.\n", creature->effet_special);
+    }
 }

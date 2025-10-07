@@ -11,6 +11,7 @@ typedef struct {
     int attaque_max;
     int defense;
     int perles; // monnaie du jeu
+    int isParalyzed;
 } Plongeur;
 
 // Constructeur

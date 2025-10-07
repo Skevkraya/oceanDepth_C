@@ -12,7 +12,8 @@ Plongeur* creer_joueur(
     int attaque_min,
     int attaque_max,
     int defense,
-    int perles
+    int perles,
+    int isParalyzed;
 ) {
     Plongeur* p = malloc(sizeof(Plongeur));
     if (!p) {
@@ -29,6 +30,7 @@ Plongeur* creer_joueur(
     p->attaque_max = attaque_max;
     p->defense     = defense;
     p->perles = perles;
+    p->isParalyzed = 0;
 
     return p;
 }
