@@ -3,6 +3,7 @@
 #include <string.h>
 #include "creatures.h"
 #include "joueur.h"
+#include "combat.h"
 
 #define MAX_CREATURES 4
 
@@ -60,6 +61,8 @@ void attaquer_plongeur(CreatureMarine* creature, Plongeur* joueur) {
     if (degats < 1) degats = 1;
     joueur->points_de_vie_actuels -= degats;
     joueur->niveau_oxygene -= (rand() % 2)+1;
+    afficher_attaque_creature(creature, joueur, degats);
+
 }
 
 void utiliser_capacite_speciale(CreatureMarine* creature, Plongeur* joueur) {

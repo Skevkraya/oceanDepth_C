@@ -7,6 +7,8 @@
 void afficher_actions_disponibles();
 int attaquer_creature(Plongeur* joueur, CreatureMarine* creature);
 void attaquer_plongeur(CreatureMarine* creature, Plongeur* joueur);
+void afficher_attaque_joueur(CreatureMarine* creature, Plongeur* joueur, int degats);
+void afficher_attaque_creature(CreatureMarine* creature, Plongeur* joueur, int degats);
 
 #endif
 
