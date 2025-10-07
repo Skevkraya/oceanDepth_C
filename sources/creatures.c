@@ -89,3 +89,5 @@ void utiliser_capacite_speciale(CreatureMarine* creature, Plongeur* joueur) {
         printf("Capacité spéciale '%s' inconnue.\n", creature->effet_special);
     }
 }
+
+void cancelParalized(Joueur)
