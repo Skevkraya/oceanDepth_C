@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "creatures.h"
+#include "joueur.h"
 
 const CreatureMarine KRAKEN = {1, "🐙 Kraken", 180, 180, 25, 40, 10, 5, "aucun", 1};
 const CreatureMarine REQUIN = {2, "🦈 Requin", 100, 100, 15, 25, 5, 15, "aucun", 1};
@@ -59,3 +60,14 @@ void afficher_creatures(CreatureMarine* creatures[], int nb_creatures) {
     puts("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 }
 
+void attaquer_plongeur(CreatureMarine* creature, Plongeur* joueur) {
+    int degats_base = rand() % (creature->attaque_max - creature->attaque_min + 1) + creature->attaque_min;
+    int degats = degats_base - joueur->defense;
+    if (degats < 1) degats = 1;
+    joueur->points_de_vie_actuels -= degats;
+    joueur->niveau_oxygene -= (rand() % 2)+1;
+}
+
+void utiliser_capacite_speciale(CreatureMarine* creature, Plongeur joueur) {
+
+}

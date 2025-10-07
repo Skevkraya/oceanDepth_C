@@ -6,8 +6,8 @@ typedef struct {
     char nom[30];
     int points_de_vie_max;
     int points_de_vie_actuels;
-    int attaque_minimale;
-    int attaque_maximale;
+    int attaque_min;
+    int attaque_max;
     int defense;
     int vitesse;
     char effet_special[20]; // "paralysie", "poison", "aucun"
@@ -18,6 +18,7 @@ typedef struct {
 CreatureMarine* creer_creature(const CreatureMarine* modele);
 void detruire_creature(CreatureMarine* creature);
 void afficher_creatures(CreatureMarine* creatures[], int nb_creatures);
+void attaquer_plongeur(CreatureMarine* creature, Plongeur* joueur);
 
 extern const CreatureMarine KRAKEN;
 extern const CreatureMarine REQUIN;
