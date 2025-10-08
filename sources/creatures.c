@@ -36,7 +36,7 @@ void afficher_creatures(CreatureMarine* creatures[], int nb_creatures) {
         printf("Aucune créature.\n");
         return;
     }
-
+ 
     int largeur = 20;
 
     for (int i = 0; i < nb_creatures; i++) {
@@ -57,37 +57,56 @@ void afficher_creatures(CreatureMarine* creatures[], int nb_creatures) {
 
 void attaquer_plongeur(CreatureMarine* creature, Plongeur* joueur) {
     int degats_base = rand() % (creature->attaque_max - creature->attaque_min + 1) + creature->attaque_min;
+    if (strcmp(creature->effet_special, "Charge perforante") == 0 && joueur->defense >=2) {
+        joueur->defense -=2;
+    }
     int degats = degats_base - joueur->defense;
     if (degats < 1) degats = 1;
-    joueur->points_de_vie_actuels -= degats;
+
+    if (strcmp(creature->effet_special, "Charge perforante") == 0 && joueur->defense >=2) {
+        joueur->defense -=2;
+    }
+
+    if (strcmp(creature->effet_special, "Frénésie sanguinaire") == 0) {
+        if ((float)creature->points_de_vie_actuels / creature->points_de_vie_max < 0.5f) {
+            degats = (int)(degats * 1.3f); 
+        }
+    }
+
+    joueur->points_de_vie -= degats;
     joueur->niveau_oxygene -= (rand() % 2)+1;
     afficher_attaque_creature(creature, joueur, degats);
-
 }
 
 void utiliser_capacite_speciale(CreatureMarine* creature, Plongeur* joueur) {
     if (strcmp(creature->effet_special, "Etreinte tentaculaire") == 0) {
         printf("%s ! Le %s attaque deux fois !\n", creature->effet_special, creature->nom);
-        attaquer_plongeur(CreatureMarine* creature, Plongeur* joueur);
+        attaquer_plongeur(creature, joueur);
 
     } else if (strcmp(creature->effet_special, "Piqûre paralysante") == 0) {
         printf("%s ! Le joueur sera paralysé au prochain tour!\n", creature->effet_special);
         joueur->isParalyzed=1;
 
     } else if (strcmp(creature->effet_special, "Frénésie sanguinaire") == 0) {
-        printf("%s ! Le %s entre en frénésie !\n", creature->effet_special, creature->nom);
-
+        printf("%s ! Le %s entre en frénésie ! +30%% dégâts si PV < 50%% \n", creature->effet_special, creature->nom);
+        // Logique dans attaquer_plongeur
 
     } else if (strcmp(creature->effet_special, "Charge perforante") == 0) {
         printf("%s ! Le %s ignore la défense du plongeur !\n", creature->effet_special, creature->nom);
+        // Logique dans attaquer_plongeur
 
     } else if (strcmp(creature->effet_special, "Carapace durcie") == 0) {
         printf("%s ! Le %s durcit sa carapace !\n", creature->effet_special, creature->nom);
-
+        // Logique dans attaquer_creature
 
     } else {
         printf("Capacité spéciale '%s' inconnue.\n", creature->effet_special);
     }
 }
 
-void cancelParalized(Joueur)
+void cancelParalized(Plongeur* joueur) {
+    if (joueur->isParalyzed == 1) {
+        joueur->isParalyzed = 0;
+        printf("Le plongeur n'est plus paralysé.\n");
+    }
+}

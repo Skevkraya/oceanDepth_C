@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "combat.h"
 #include "joueur.h"
 #include "creatures.h"
 
@@ -16,6 +17,7 @@ void afficher_actions_disponibles() {
 void attaquer_creature(Plongeur* joueur, CreatureMarine* creature) {
     int degats_base = rand() % (joueur->attaque_max - joueur->attaque_min + 1) + joueur->attaque_min;
     int degats = degats_base - creature->defense;
+    if(strcmp(creature->effet_special, "Carapace durcie") == 0) degats -= degats * 0.2;
     if (degats < 1) degats = 1;
     creature->points_de_vie_actuels -= degats;
 
@@ -45,8 +47,8 @@ void afficher_attaque_joueur(CreatureMarine* creature, Plongeur* joueur, int deg
     printf("║ Dégâts infligés: %d points                                ║\n", degats);
     // printf("║ Le %s riposte! Vous perdez 18 points de vie     ║\n", creature -> nom);
     printf("╚═══════════════════════════════════════════════════════════╝\n");
-
 }
+
 void afficher_attaque_creature(CreatureMarine* creature, Plongeur* joueur, int degats) {
     printf("╔════════════════════ COMBAT SOUS-MARIN ════════════════════╗\n");
     printf("║ Le %s vous attaque                                        ║\n", creature -> nom);
@@ -58,3 +60,5 @@ void afficher_attaque_creature(CreatureMarine* creature, Plongeur* joueur, int d
     printf("║ Dégâts infligés: %d points                                ║\n", degats);
     printf("╚═══════════════════════════════════════════════════════════╝\n");
 }
+
+

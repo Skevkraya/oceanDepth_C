@@ -76,27 +76,32 @@ int main(int argc, char const *argv[]) {
         }
 
         afficher_plongeur(joueur);
+        attendre_entree();
         afficher_creatures(creatures, nb_creatures);
+        attendre_entree();
 
         if (joueur->niveau_oxygene <= 10) {
             printf("ALERTE CRITIQUE\n");
         }
-        if (joueur->niveau_oxygene <= 0) {
-            printf("Manque d'oxygène ! Vous perdez 5 PV ...\n");
-            joueur->points_de_vie -= 5;
-        }
-        
-        if(joueur->points_de_vie <= 0) {
-            printf("Vous avez perdu !\n");
-            running = 0;
-        }
 
+        // Vérifier taux oxygène
+        verifOxygene(joueur);
+        // Vérifier si le joueur est mort
+        verifMort(joueur, creatures, nb_creatures);
+        // Enlever statuts 
+        cancelParalized(joueur);
+
+        // Attaques créatures
         for(int i=0; i<nb_creatures; i++) {
-            printf("Au tour du %s", creatures[i]->nom);
-            utiliser_capacite_speciale(CreatureMarine* creatures[i], Plongeur* joueur);
-            attaquer_plongeur(CreatureMarine* creatures[i], Plongeur* joueur);
-
+            printf("Au tour du %s\n", creatures[i]->nom);
+            utiliser_capacite_speciale(creatures[i], joueur);
+            attaquer_plongeur(creatures[i], joueur);
+            attendre_entree();
+            afficher_plongeur(joueur);
+            verifMort(joueur, creatures, nb_creatures);
+            attendre_entree();
         }
+
     }
 
     return 0;

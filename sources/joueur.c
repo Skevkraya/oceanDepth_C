@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "joueur.h"
+
 #include "interface.h"
+#include "creatures.h"
 
 Plongeur* creer_joueur(
     int points_de_vie,
@@ -12,8 +14,7 @@ Plongeur* creer_joueur(
     int attaque_min,
     int attaque_max,
     int defense,
-    int perles,
-    int isParalyzed;
+    int perles
 ) {
     Plongeur* p = malloc(sizeof(Plongeur));
     if (!p) {
@@ -69,5 +70,28 @@ void gagner_fatigue(Plongeur* plongeur, int quantite)  {
     plongeur->niveau_fatigue += quantite;
     if (plongeur->niveau_fatigue > 5) {
         plongeur->niveau_fatigue = 5;
+    }
+};
+
+void verifOxygene(Plongeur* plongeur) {
+    if (!plongeur) return;
+    if (plongeur->niveau_oxygene <= 0) {
+        printf("Manque d'oxygène ! Vous perdez 5 PV ...\n");
+        plongeur->points_de_vie -= 5;
+    }
+};
+
+void verifMort(Plongeur* plongeur, CreatureMarine* creatures[], int nb_creatures) {
+    if (!plongeur) return;
+    if (plongeur->points_de_vie <= 0) {
+        printf("Vous êtes mort ! Game Over.\n");
+        detruire_plongeur(plongeur);
+        if(nb_creatures > 0) {
+            for(int i=0; i<nb_creatures; i++) {
+                detruire_creature(creatures[i]);
+            }
+            free(creatures);
+        } 
+        exit(EXIT_SUCCESS);
     }
 };

@@ -23,3 +23,13 @@ void afficher_jauge(int valeur, int max, int longueur) {
     // afficher les valeurs numériques à côté
     printf(" %d/%d\n", valeur, max);
 }
+
+void attendre_entree() {
+    printf("\nAppuyez sur ENTRÉE pour continuer...\n");
+
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {}
+
+    getchar();
+}
+

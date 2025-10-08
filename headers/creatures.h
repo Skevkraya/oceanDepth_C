@@ -1,8 +1,10 @@
 ﻿#ifndef CREATURES_H
 #define CREATURES_H
 
-typedef struct {
-    int id;  // identifiant unique pour cibler
+struct Plongeur;
+
+typedef struct CreatureMarine {
+    int id;
     char nom[30];
     int points_de_vie_max;
     int points_de_vie_actuels;
@@ -10,16 +12,16 @@ typedef struct {
     int attaque_max;
     int defense;
     int vitesse;
-    char effet_special[20]; // "paralysie", "poison", "aucun"
+    char effet_special[30];
     int est_vivant;
 } CreatureMarine;
 
-// Constructeur
 CreatureMarine* creer_creature(const CreatureMarine* modele);
 void detruire_creature(CreatureMarine* creature);
 void afficher_creatures(CreatureMarine* creatures[], int nb_creatures);
-void attaquer_plongeur(CreatureMarine* creature, Plongeur* joueur);
-void utiliser_capacite_speciale(CreatureMarine* creature, Plongeur* joueur);
+void attaquer_plongeur(CreatureMarine* creature, struct Plongeur* joueur);
+void utiliser_capacite_speciale(CreatureMarine* creature, struct Plongeur* joueur);
+void cancelParalized(struct Plongeur* joueur);
 
 extern const CreatureMarine KRAKEN;
 extern const CreatureMarine REQUIN;
