@@ -1,9 +1,13 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Iheaders
-SRC = $(wildcard sources/*.c)
-OBJ = $(patsubst sources/%.c, build/%.o, $(SRC))
+CFLAGS = -Wall -Wextra -Iheaders -Iheaders/items
+SRC_DIR = sources
+OBJ_DIR = build
+BIN = oceanDepth.exe
 
-# Détection de l’OS
+SRC = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/*/*.c)
+OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+
+
     ifeq ($(shell uname 2>/dev/null),)
         MKDIR = if not exist build mkdir build
         RM = rmdir /S /Q build & del /Q oceanDepth.exe 2>nul || true
@@ -12,11 +16,11 @@ OBJ = $(patsubst sources/%.c, build/%.o, $(SRC))
         RM = rm -rf build oceanDepth.exe
     endif
 
-oceanDepth.exe: $(OBJ)
+$(BIN): $(OBJ)
 	$(CC) $(OBJ) -o $@
 
-build/%.o: sources/%.c
-	@$(MKDIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)   # ✅ crée build/items/ si besoin
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

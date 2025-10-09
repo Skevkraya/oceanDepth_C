@@ -5,6 +5,8 @@
 #include "joueur.h"
 #include "creatures.h"
 #include "combat.h"
+#include "inventaire.h"
+
 
 #define MAX_CREATURES 4
 
@@ -19,7 +21,7 @@ int main(int argc, char const *argv[]) {
     int nb_creatures = 0;
           
 
-    Plongeur * joueur = creer_joueur(50, 100, 100, 100, 5, 10, 15, 10, 50);
+    Plongeur * joueur = creer_joueur(50, 100, 100, 100, 0, 10, 15, 10, 50);
     afficher_plongeur(joueur);
 
     if (nb_creatures < MAX_CREATURES) {
@@ -31,48 +33,56 @@ int main(int argc, char const *argv[]) {
 
     afficher_creatures(creatures, nb_creatures);
 
-    int running = 1;
+    int running = 0;
     while (running) {
-        // actions joueur
-        afficher_actions_disponibles();
-        printf("Choisissez une action: ");
         int nb_attaques = joueur->niveau_fatigue<2?3:(joueur->niveau_fatigue>=2&&joueur->niveau_fatigue<=3?2:1);
-        int action;
-        scanf("%d", &action);
 
-        switch (action) {
-            case 1:
-                if (nb_attaques <= 0) {
-                    printf("Vous êtes trop fatigué pour attaquer!\n");
-                    break;
-                }
-                nb_attaques--;
-                printf("Attaque effectuée! Attaques restantes: %d\n", nb_attaques);
-                CreatureMarine* cible = creatures[0];
-                if (nb_creatures > 0) {
-                    attaquer_creature(joueur, cible);
-                    if (!cible->est_vivant) {
-                        detruire_creature(cible);
-                        for (int i = 1; i < nb_creatures; i++) {
-                            creatures[i - 1] = creatures[i];
-                        }
-                        nb_creatures--;
+        // Tour du joueur 
+        while(nb_attaques>0 && nb_creatures>0) {
+            afficher_actions_combat_disponibles(nb_attaques);
+            printf("Choisissez une action: ");
+            int action;
+            scanf("%d", &action);
+            switch (action) {
+                case 1:
+                    if (nb_attaques <= 0) {
+                        printf("Vous êtes trop fatigué pour attaquer!\n");
+                        break;
                     }
-                } else {
-                    printf("Aucune créature à attaquer.\n");
+                    
+                        CreatureMarine* cible = creatures[0];
+                        if (nb_creatures > 0) {
+                            attaquer_creature(joueur, cible);
+                            nb_attaques--;
+                            printf("Attaque effectuée! Attaques restantes: %d\n", nb_attaques);
+                            afficher_creatures(creatures, nb_creatures);
+                            if (!cible->est_vivant) {
+                                detruire_creature(cible);
+                                for (int i = 1; i < nb_creatures; i++) {
+                                    creatures[i - 1] = creatures[i];
+                                }
+                                nb_creatures--;
+                            }
+                        } else {
+                            printf("Aucune créature à attaquer.\n");
+                        } 
+                    
+                    break;
+                case 2:
+                    printf("Compétence marine utilisée!\n");
+                    break;
+                case 3:
+                    printf("Objet consommé!\n");
+                    break;
+                case 4:
+                    running = 0;
+                    break;
+                default:
+                    printf("Action invalide. Veuillez réessayer.\n");
                 }
-                break;
-            case 2:
-                printf("Compétence marine utilisée!\n");
-                break;
-            case 3:
-                printf("Objet consommé!\n");
-                break;
-            case 4:
-                running = 0;
-                break;
-            default:
-                printf("Action invalide. Veuillez réessayer.\n");
+            if(nb_creatures<0) {
+                printf("Toutes les créatures ont été vaincues !\n");
+            }
         }
 
         afficher_plongeur(joueur);
@@ -103,6 +113,23 @@ int main(int argc, char const *argv[]) {
         }
 
     }
+
+
+    // TEST
+    Inventaire inv = {0};
+
+
+
+    ajouter_item(&inv, (Item*)creer_harpon_laser());
+    ajouter_item(&inv, (Item*)creer_trousse_soin());
+    ajouter_item(&inv, (Item*)creer_armure_titanium());
+
+    afficher_inventaire(&inv);
+
+    printf("\nUtilisation du slot 0 :\n");
+    inv.slots[0]->utiliser(inv.slots[0]);
+
+    detruire_inventaire(&inv);
 
     return 0;
 }

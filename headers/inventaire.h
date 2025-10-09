@@ -1,32 +1,37 @@
 ﻿#ifndef INVENTAIRE_H
 #define INVENTAIRE_H
+#include "items/item.h"
+#include "items/arme.h"
+#include "items/objet.h"
+#include "items/combinaison.h"
+
+#define NB_SLOTS 8
 
 typedef struct {
-    int id;  // identifiant unique pour cibler
-    char nom[30];
-    int equiped; // 1 si équipé, 0 sinon
-    int attaque_min;
-    int attaque_max;
-    int perte_oxygene; // oxygene perdu par attaque
-} Arme;
+    Item* slots[NB_SLOTS];
+} Inventaire;
 
-typedef struct {
-    int id;  // identifiant unique pour cibler
-    char nom[30];
-    int equiped; // 1 si équipé, 0 sinon
-    int defense;
-    int perte_oxygene; 
-} Combinaison;
+void ajouter_item(Inventaire* inv, Item* item);
+void afficher_inventaire(Inventaire* inv);
+void detruire_inventaire(Inventaire* inv);
 
-typedef struct {
-    int id;  // identifiant unique pour cibler
-    char nom[30];
-    int quantite;
-    char effet_texte[20]; // "soin", "oxygene", "fatigue"
-    int effet_soin; // points de vie rendus
-    int effet_oxygene; // points d'oxygene rendus
-    int effet_fatigue; // points de fatigue retirés
-} Objet;
+
+
+// MODÈLES PRÉDÉFINIS
+Arme* creer_trident_rouille(void);
+Arme* creer_harpon_classique(void);
+Arme* creer_harpon_elec(void);
+Arme* creer_harpon_laser(void);
+
+Combinaison* creer_neoprene_basique(void);
+Combinaison* creer_comb_carbone(void);
+Combinaison* creer_armure_titanium(void);
+
+Objet* creer_capsule_oxygene(void);
+Objet* creer_trousse_soin(void);
+Objet* creer_stimulant_marin(void);
+Objet* creer_antidote(void);
+
 
 #endif
 

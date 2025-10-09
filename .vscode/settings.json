@@ -1,5 +1,11 @@
 {
     "files.associations": {
-        "interface.h": "c"
+        "*.php": "php",
+        "*.html": "html",
+        "interface.h": "c",
+        "item.h": "c",
+        "combinaison.h": "c",
+        "arme.h": "c",
+        "objet.h": "c"
     }
 }

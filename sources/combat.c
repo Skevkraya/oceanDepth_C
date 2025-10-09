@@ -6,9 +6,9 @@
 #include "creatures.h"
 
 
-void afficher_actions_disponibles() {
+void afficher_actions_combat_disponibles(int nb_attaques) {
     puts("Actions disponibles:");
-    puts(" 1 - Attaquer avec harpon (2 attaques restantes)");
+    printf(" 1 - Attaquer avec harpon (%d attaques restantes)\n", nb_attaques);
     puts(" 2 - Utiliser compétence marine");
     puts(" 3 - Consommer objet");
     puts(" 4 - Terminer le tour");
